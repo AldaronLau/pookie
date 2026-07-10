@@ -1,5 +1,5 @@
 use lazy_static::lazy_static;
-use rookie::{self, enums::Cookie, Result};
+use pookie::{self, enums::Cookie, Result};
 use std::collections::HashMap;
 
 type BrowserFn = fn(Option<Vec<String>>) -> Result<Vec<Cookie>>;
@@ -8,29 +8,29 @@ lazy_static! {
   pub static ref BROWSERS_MAP: HashMap<String, BrowserFn> = {
     let mut map: HashMap<String, BrowserFn> = HashMap::default();
 
-    map.insert("brave".into(), rookie::brave);
+    map.insert("brave".into(), pookie::brave);
 
     #[cfg(target_os = "linux")]
-    map.insert("cachy".into(), rookie::cachy);
+    map.insert("cachy".into(), pookie::cachy);
 
-    map.insert("chromium".into(), rookie::chromium);
-    map.insert("chrome".into(), rookie::chrome);
-    map.insert("edge".into(), rookie::edge);
-    map.insert("firefox".into(), rookie::firefox);
-    map.insert("zen".into(), rookie::zen);
+    map.insert("chromium".into(), pookie::chromium);
+    map.insert("chrome".into(), pookie::chrome);
+    map.insert("edge".into(), pookie::edge);
+    map.insert("firefox".into(), pookie::firefox);
+    map.insert("zen".into(), pookie::zen);
 
     #[cfg(target_os = "windows")]
-    map.insert("internet_explorer".into(), rookie::internet_explorer);
-    map.insert("librewolf".into(), rookie::librewolf);
-    map.insert("opera".into(), rookie::opera);
-    map.insert("opera gx".into(), rookie::opera_gx);
+    map.insert("internet_explorer".into(), pookie::internet_explorer);
+    map.insert("librewolf".into(), pookie::librewolf);
+    map.insert("opera".into(), pookie::opera);
+    map.insert("opera gx".into(), pookie::opera_gx);
 
     #[cfg(target_os = "macos")]
-    map.insert("safari".into(), rookie::safari);
+    map.insert("safari".into(), pookie::safari);
 
-    map.insert("vivaldi".into(), rookie::vivaldi);
+    map.insert("vivaldi".into(), pookie::vivaldi);
 
-    map.insert("arc".into(), rookie::arc);
+    map.insert("arc".into(), pookie::arc);
 
     map
   };

@@ -1,19 +1,18 @@
 [package]
-name = "rookie"
-version = "0.5.6"
+name = "pookie"
+version = "0.0.1"
 edition = "2021"
 description = "Load cookie from your web browsers"
 license-file = "../MIT-LICENSE.txt"
-homepage = "https://crates.io/crates/rookie"
-documentation = "https://docs.rs/rookie/"
-repository = "https://github.com/thewh1teagle/rookie"
+homepage = "https://crates.io/crates/pookie"
+documentation = "https://docs.rs/pookie/"
+repository = "https://github.com/AldaronLau/pookie"
 readme = "../README.md"
-keywords = ["windows", "cookies", "rust", "web"]
+keywords = ["cookies", "rust", "web"]
 
 [lib]
-name = "rookie"
+name = "pookie"
 path = "src/lib.rs"
-
 
 [dependencies]
 indoc = "2.0.5"
@@ -76,6 +75,6 @@ windows = { version = "0.51", features = [
 
 [[example]]
 name = "simple"
-path = "../examples/rust/simple.rs"
+path = "../examples/simple.rs"
 
 include = ["src/**/*", "Cargo.toml", "Cargo.lock"]

@@ -1,10 +1,10 @@
 use clap::Parser;
-use rookie::{any_browser, common::enums::Cookie};
+use pookie::{any_browser, common::enums::Cookie};
 mod browsers_map;
 use browsers_map::BROWSERS_MAP;
 mod args;
 use args::Args;
-use rookie::common::format;
+use pookie::common::format;
 
 fn print_cookies(args: Args, cookies: Vec<Cookie>) {
   match args.format.as_str() {
@@ -24,7 +24,7 @@ fn print_version() {
   println!(
     "CLI: {}\nRookie: {}",
     env!("CARGO_PKG_VERSION"),
-    rookie::version()
+    pookie::version()
   );
   std::process::exit(0);
 }
@@ -39,7 +39,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
   let mut cookies = vec![];
   let args_c = args.clone();
   if args.load {
-    cookies = rookie::load(args.domains)?;
+    cookies = pookie::load(args.domains)?;
   } else if let Some(browser) = args.browser {
     let browser_fn = BROWSERS_MAP.get(&browser).unwrap();
     cookies = browser_fn(args.domains)?;
@@ -47,7 +47,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     cookies = any_browser(path.as_str(), args.domains, args.key_path.as_deref())?;
   } else {
     // Default load from all
-    cookies = rookie::load(args.domains)?;
+    cookies = pookie::load(args.domains)?;
   }
   print_cookies(args_c, cookies);
 

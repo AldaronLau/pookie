@@ -1,7 +1,7 @@
 [workspace]
-members = ["rookie-rs", "cli"]
+members = ["pookie", "cli"]
 
 exclude = ["examples/rust/http"]
 
-default-members = ["rookie-rs"]
+default-members = ["pookie"]
 resolver = "2"

@@ -1,9 +1,8 @@
-# rookie
+# Pookie
 
-[![Crates](https://img.shields.io/crates/v/rookie?logo=rust)](https://crates.io/crates/rookie/)
-[![License](https://img.shields.io/github/license/thewh1teagle/rookie?color=00aaaa&logo=license)](https://github.com/thewh1teagle/rookie/blob/main/rookie-rs/MIT-LICENSE.txt)
+#### Load cookies from any browser on any platform
 
-Load cookies from any browser on any platform
+Fork of [rookie](https://crates.io/crates/rookie) due to the repository being archived.
 
 ## Features 🚀
 
@@ -18,19 +17,19 @@ Load cookies from any browser on any platform
 ## Rust
 
 ```shell
-cargo add rookie
+cargo add pookie
 ```
 
 Create `main.rs` with the following
 
 ```rust
-use rookie::brave;
+use pookie::brave;
 
 fn main() {
     let domains = vec!["google.com"];
     let cookies = brave(Some(domains)).unwrap();
     for cookie in cookies {
-        println!("{:?}", cookie);
+        println!("{cookie:?}");
     }
 }
 ```

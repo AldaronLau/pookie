@@ -30,12 +30,12 @@ mod macos;
 mod windows;
 
 /// Returns rookie version
-/// Format: <semver>(<commit>)
+/// Format: `<semver>(<commit>)`
 ///
 /// # Examples
 ///
 /// ```
-/// let version = rookie::version();
+/// let version = pookie::version();
 /// println!("{}", version);
 /// ```
 pub fn version() -> String {
@@ -52,7 +52,7 @@ pub fn version() -> String {
 ///
 /// ```
 /// let domains = vec!["google.com"];
-/// let cookies = rookie::firefox(Some(domains));
+/// let cookies = pookie::firefox(Some(domains));
 /// ```
 pub fn firefox(domains: Option<Vec<String>>) -> Result<Vec<Cookie>> {
   let config = get_browser_config("firefox");
@@ -70,7 +70,7 @@ pub fn firefox(domains: Option<Vec<String>>) -> Result<Vec<Cookie>> {
 ///
 /// ```
 /// let domains = vec!["google.com"];
-/// let cookies = rookie::librewolf(Some(domains));
+/// let cookies = pookie::librewolf(Some(domains));
 /// ```
 pub fn librewolf(domains: Option<Vec<String>>) -> Result<Vec<Cookie>> {
   let config = get_browser_config("librewolf");
@@ -88,7 +88,7 @@ pub fn librewolf(domains: Option<Vec<String>>) -> Result<Vec<Cookie>> {
 ///
 /// ```
 /// let domains = vec!["google.com"];
-/// let cookies = rookie::cachy(Some(domains));
+/// let cookies = pookie::cachy(Some(domains));
 /// ```
 #[cfg(target_os = "linux")]
 pub fn cachy(domains: Option<Vec<String>>) -> Result<Vec<Cookie>> {
@@ -107,7 +107,7 @@ pub fn cachy(domains: Option<Vec<String>>) -> Result<Vec<Cookie>> {
 ///
 /// ```
 /// let domains = vec!["google.com"];
-/// let cookies = rookie::chrome(Some(domains));
+/// let cookies = pookie::chrome(Some(domains));
 /// ```
 pub fn chrome(domains: Option<Vec<String>>) -> Result<Vec<Cookie>> {
   let config = get_browser_config("chrome");
@@ -133,7 +133,7 @@ pub fn chrome(domains: Option<Vec<String>>) -> Result<Vec<Cookie>> {
 ///
 /// ```
 /// let domains = vec!["google.com"];
-/// let cookies = rookie::chromium(Some(domains));
+/// let cookies = pookie::chromium(Some(domains));
 /// ```
 pub fn chromium(domains: Option<Vec<String>>) -> Result<Vec<Cookie>> {
   let config = get_browser_config("chromium");
@@ -159,7 +159,7 @@ pub fn chromium(domains: Option<Vec<String>>) -> Result<Vec<Cookie>> {
 ///
 /// ```
 /// let domains = vec!["google.com"];
-/// let cookies = rookie::brave(Some(domains));
+/// let cookies = pookie::brave(Some(domains));
 /// ```
 pub fn brave(domains: Option<Vec<String>>) -> Result<Vec<Cookie>> {
   let config = get_browser_config("brave");
@@ -185,7 +185,7 @@ pub fn brave(domains: Option<Vec<String>>) -> Result<Vec<Cookie>> {
 ///
 /// ```
 /// let domains = vec!["google.com"];
-/// let cookies = rookie::brave(Some(domains));
+/// let cookies = pookie::brave(Some(domains));
 /// ```
 pub fn arc(domains: Option<Vec<String>>) -> Result<Vec<Cookie>> {
   let config = get_browser_config("arc");
@@ -211,7 +211,7 @@ pub fn arc(domains: Option<Vec<String>>) -> Result<Vec<Cookie>> {
 ///
 /// ```
 /// let domains = vec!["google.com"];
-/// let cookies = rookie::zen(Some(domains));
+/// let cookies = pookie::zen(Some(domains));
 /// ```
 pub fn zen(domains: Option<Vec<String>>) -> Result<Vec<Cookie>> {
   let config = get_browser_config("zen");
@@ -229,7 +229,7 @@ pub fn zen(domains: Option<Vec<String>>) -> Result<Vec<Cookie>> {
 ///
 /// ```
 /// let domains = vec!["google.com"];
-/// let cookies = rookie::edge(Some(domains));
+/// let cookies = pookie::edge(Some(domains));
 /// ```
 pub fn edge(domains: Option<Vec<String>>) -> Result<Vec<Cookie>> {
   let config = get_browser_config("edge");
@@ -255,7 +255,7 @@ pub fn edge(domains: Option<Vec<String>>) -> Result<Vec<Cookie>> {
 ///
 /// ```
 /// let domains = vec!["google.com"];
-/// let cookies = rookie::vivaldi(Some(domains));
+/// let cookies = pookie::vivaldi(Some(domains));
 /// ```
 pub fn vivaldi(domains: Option<Vec<String>>) -> Result<Vec<Cookie>> {
   let config = get_browser_config("vivaldi");
@@ -281,7 +281,7 @@ pub fn vivaldi(domains: Option<Vec<String>>) -> Result<Vec<Cookie>> {
 ///
 /// ```
 /// let domains = vec!["google.com"];
-/// let cookies = rookie::opera(Some(domains));
+/// let cookies = pookie::opera(Some(domains));
 /// ```
 pub fn opera(domains: Option<Vec<String>>) -> Result<Vec<Cookie>> {
   let config = get_browser_config("opera");
@@ -307,7 +307,7 @@ pub fn opera(domains: Option<Vec<String>>) -> Result<Vec<Cookie>> {
 ///
 /// ```
 /// let domains = vec!["google.com"];
-/// let cookies = rookie::opera_gx(Some(domains));
+/// let cookies = pookie::opera_gx(Some(domains));
 /// ```
 pub fn opera_gx(domains: Option<Vec<String>>) -> Result<Vec<Cookie>> {
   let config = get_browser_config("opera_gx");
@@ -333,7 +333,7 @@ pub fn opera_gx(domains: Option<Vec<String>>) -> Result<Vec<Cookie>> {
 ///
 /// ```
 /// let domains = vec!["google.com"];
-/// let cookies = rookie::octo_browser(Some(domains));
+/// let cookies = pookie::octo_browser(Some(domains));
 /// ```
 #[cfg(target_os = "windows")]
 pub fn octo_browser(domains: Option<Vec<String>>) -> Result<Vec<Cookie>> {
@@ -352,7 +352,7 @@ pub fn octo_browser(domains: Option<Vec<String>>) -> Result<Vec<Cookie>> {
 ///
 /// ```
 /// let domains = vec!["google.com"];
-/// let cookies = rookie::safari(Some(domains));
+/// let cookies = pookie::safari(Some(domains));
 /// ```
 #[cfg(target_os = "macos")]
 pub fn safari(domains: Option<Vec<String>>) -> Result<Vec<Cookie>> {
@@ -371,7 +371,7 @@ pub fn safari(domains: Option<Vec<String>>) -> Result<Vec<Cookie>> {
 ///
 /// ```
 /// let domains = vec!["google.com"];
-/// let cookies = rookie::internet_explorer(Some(domains));
+/// let cookies = pookie::internet_explorer(Some(domains));
 /// ```
 #[cfg(target_os = "windows")]
 pub fn internet_explorer(domains: Option<Vec<String>>) -> Result<Vec<Cookie>> {
@@ -390,7 +390,7 @@ pub fn internet_explorer(domains: Option<Vec<String>>) -> Result<Vec<Cookie>> {
 ///
 /// ```
 /// let domains = vec!["google.com"];
-/// let cookies = rookie::load(Some(domains));
+/// let cookies = pookie::load(Some(domains));
 /// ```
 pub fn load(domains: Option<Vec<String>>) -> Result<Vec<Cookie>> {
   let mut cookies = Vec::new();
@@ -440,7 +440,7 @@ pub fn load(domains: Option<Vec<String>>) -> Result<Vec<Cookie>> {
 /// let domains = vec!["google.com"];
 /// let cookies_path = "C:\\Users\\User\\AppData\\Local\\BraveSoftware\\Brave-Browser\\User Data\\default\\network\\Cookies";
 /// let key_path = "C:\\Users\\User\\AppData\\Local\\BraveSoftware\\Brave-Browser\\User Data\\Local State";
-/// let cookies = rookie::any_browser(cookies_path, None, Some(key_path)).unwrap();
+/// let cookies = pookie::any_browser(cookies_path, None, Some(key_path)).unwrap();
 /// ```
 #[allow(unused_variables)]
 pub fn any_browser(
