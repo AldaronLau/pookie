@@ -1,8 +1,5 @@
 # rookie
 
-[![PyPi Downloads](https://img.shields.io/pypi/dm/rookiepy?logo=python)](https://pypi.org/project/rookiepy/)
-[![PyPi Version](https://img.shields.io/pypi/v/rookiepy?color=00aa00&logo=python)](https://pypi.org/project/rookiepy/)
-[![NPM Version](https://img.shields.io/npm/v/@rookie-rs/api?logo=npm&color=0076CE)](https://www.npmjs.com/package/@rookie-rs/api)
 [![Crates](https://img.shields.io/crates/v/rookie?logo=rust)](https://crates.io/crates/rookie/)
 [![License](https://img.shields.io/github/license/thewh1teagle/rookie?color=00aaaa&logo=license)](https://github.com/thewh1teagle/rookie/blob/main/rookie-rs/MIT-LICENSE.txt)
 
@@ -10,8 +7,6 @@ Load cookies from any browser on any platform
 
 ## Features 🚀
 
-- Available for `Rust`, `Python`, and `JavaScript`
-- Ensures type safety (e.g., `TypeScript`, `Python` with type hints)
 - Super Fast, Built with `Rust`
 - Bypass `Chrome` restriction of file locking and appbound encryption (requires admin rights on `Windows` from v130.x)
 - Read session cookies from `Chrome` based browsers! (requires admin rights on `Windows`)
@@ -39,58 +34,6 @@ fn main() {
     }
 }
 ```
-
-## Python
-
-```shell
-pip install rookiepy
-```
-
-And the usage it similar to Rust
-
-```python
-import rookiepy
-cookies = rookiepy.firefox(["google.com"])
-for cookie in cookies:
-    print(cookie['domain'], cookie['value'])
-```
-
-## JavaScript
-
-```console
-npm install @rookie-rs/api
-```
-
-```js
-import { brave } from "@rookie-rs/api";
-const cookies = brave();
-for (const cookie of cookies) {
-  console.log(cookie);
-}
-```
-
-## Examples 📋
-
-`Rust` [examples/rust](examples/rust)
-
-`Python` [examples/python](examples/python)
-
-`JavaScript` [examples/javascript](examples/javascript)
-
-## Docs 📘
-
-`Rust`
-
-- [docs/Rust.md](docs/Rust.md)
-- [docs.rs/rookie](https://docs.rs/rookie)
-
-`Python`
-
-- [docs/Python.md](docs/Python.md)
-
-`JavaScript`
-
-- [docs/JavaScript.md](docs/JavaScript.md)
 
 ## CLI 💻
 
@@ -145,4 +88,7 @@ look at [rookie-rs/config.json](rookie-rs/config.json) to see what configuration
 
 ## Credits 🙌
 
-[github.com/borisbabic/browser_cookie3](https://github.com/borisbabic/browser_cookie3)
+This project is possible because of prior art:
+
+ - [rookie](https://github.com/thewh1teagle/rookie)
+ - [browser_cookie3](https://github.com/borisbabic/browser_cookie3)
