@@ -1,6 +1,6 @@
 [package]
 name = "pookie"
-version = "0.0.1"
+version = "0.0.2"
 edition = "2021"
 description = "Load cookie from your web browsers"
 license-file = "../MIT-LICENSE.txt"
