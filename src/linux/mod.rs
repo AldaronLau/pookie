@@ -1,4 +1,4 @@
-use std::{collections::HashMap, sync::Arc};
+use std::collections::HashMap;
 
 use eyre::{Result, anyhow, bail};
 use zbus::{
@@ -35,7 +35,7 @@ fn libsecret_call<T>(
     connection: &Connection,
     method: &str,
     args: T,
-) -> zbus::Result<Arc<Message>>
+) -> zbus::Result<Message>
 where
     T: serde::ser::Serialize + zvariant::DynamicType,
 {
@@ -52,7 +52,7 @@ fn kwallet_call<T>(
     connection: &Connection,
     method: &str,
     args: T,
-) -> zbus::Result<Arc<Message>>
+) -> zbus::Result<Message>
 where
     T: serde::ser::Serialize + zvariant::DynamicType,
 {
@@ -70,29 +70,32 @@ fn get_password_libsecret(schema: &str, crypt_name: &str) -> Result<String> {
     let mut content = HashMap::<&str, &str>::new();
     content.insert("xdg:schema", schema);
     content.insert("application", crypt_name);
-    let m = libsecret_call(&connection, "SearchItems", &content)?;
-    let (reply_paths, _): (Vec<ObjectPath>, Vec<ObjectPath>) = m.body()?;
+    let m = libsecret_call(&connection, "SearchItems", &content)?.body();
+    let (reply_paths, _): (Vec<ObjectPath>, Vec<ObjectPath>) =
+        m.deserialize()?;
     let path = reply_paths.first().ok_or(anyhow!("search items empty"))?;
 
-    let m = libsecret_call(&connection, "Unlock", vec![path])?;
-    let reply: (Vec<ObjectPath>, ObjectPath) = m.body()?;
+    let m = libsecret_call(&connection, "Unlock", vec![path])?.body();
+    let reply: (Vec<ObjectPath>, ObjectPath) = m.deserialize()?;
     let object_path = reply.0.first().ok_or(anyhow!("Can't unlock"))?;
 
     let mut content = HashMap::<&str, &str>::new();
     content.insert("plain", "");
     let m =
-        libsecret_call(&connection, "OpenSession", &("plain", Value::new("")))?;
+        libsecret_call(&connection, "OpenSession", &("plain", Value::new("")))?
+            .body();
 
-    let reply: (Value, ObjectPath) = m.body()?;
+    let reply: (Value, ObjectPath) = m.deserialize()?;
     let session = reply.1;
 
     let m = libsecret_call(
         &connection,
         "GetSecrets",
         &(vec![object_path], session),
-    )?;
+    )?
+    .body();
     type Response<'a> = (ObjectPath<'a>, Vec<u8>, Vec<u8>, String);
-    let reply: HashMap<ObjectPath, Response> = m.body()?;
+    let reply: HashMap<ObjectPath, Response> = m.deserialize()?;
     let inner = reply.get(object_path).ok_or(anyhow!("Can't get secrets"))?;
     let secret = &inner.2;
 
@@ -105,22 +108,22 @@ fn get_password_kdewallet(crypt_name: &str) -> Result<String> {
     let key = format!("{} Safe Storage", capitalize(crypt_name));
 
     let m = kwallet_call(&connection, "networkWallet", ())?;
-    let network_wallet: String = m.body()?;
+    let network_wallet: String = m.body().deserialize()?;
 
     let m = kwallet_call(
         &connection,
         "open",
         (network_wallet.clone(), 0_i64, APP_ID),
     )?;
-    let handle: i32 = m.body()?;
+    let handle: i32 = m.body().deserialize()?;
     let m = kwallet_call(
         &connection,
         "readPassword",
         (handle, folder, key, APP_ID),
     )?;
-    let password: String = m.body()?;
+    let password: String = m.body().deserialize()?;
     let m = kwallet_call(&connection, "close", (network_wallet, false))?;
-    let close_ok: i32 = m.body()?;
+    let close_ok: i32 = m.body().deserialize()?;
     if close_ok != 1 {
         bail!("Close failed");
     }

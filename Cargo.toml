@@ -80,8 +80,8 @@ pbkdf2 = "0.13.0"
 sha1 = "0.11.0"
 
 [target.'cfg(target_os = "linux")'.dependencies]
-zbus = "3" #FIXME
-zvariant = "3" #FIXME
+zbus = "5.17.0"
+zvariant = "5.13.0"
 
 [target.'cfg(target_os = "macos")'.dependencies]
 pbkdf2 = "0.13.0"
