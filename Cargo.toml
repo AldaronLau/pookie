@@ -31,8 +31,9 @@ include = [
     "/LICENSE_MIT",
     "/LICENSE_ZLIB",
     "/README.md",
-    "/src/*",
+    "/config.json",
     "/examples/*",
+    "/src/*",
 ]
 version.workspace = true
 edition.workspace = true
