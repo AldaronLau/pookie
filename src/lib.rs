@@ -26,13 +26,14 @@ mod macos;
 #[cfg(target_os = "windows")]
 mod windows;
 
-/// Returns rookie version
-/// Format: `<semver>(<commit>)`
+/// Returns pookie version
+/// Format: `<semver>`
 ///
 /// # Examples
 ///
 /// ```
 /// let version = pookie::version();
+///
 /// println!("{version}");
 /// ```
 pub fn version() -> &'static str {
