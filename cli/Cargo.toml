@@ -7,7 +7,7 @@ edition = "2021"
 clap = { version = "4.4.6", features = ["derive"] }
 tracing-subscriber = "0.3.18"
 lazy_static = "1.4.0"
-pookie = { path = "../pookie", version = "0.0.2" }
+pookie = { path = ".." }
 serde_json = "1.0.107"
 
 [features]

@@ -35,10 +35,10 @@ mod windows;
 ///
 /// ```
 /// let version = pookie::version();
-/// println!("{}", version);
+/// println!("{version}");
 /// ```
 pub fn version() -> String {
-    format!("{} ({})", env!("CARGO_PKG_VERSION"), env!("COMMIT_HASH"))
+    format!("{}", env!("CARGO_PKG_VERSION"))
 }
 
 /// Returns cookies from Firefox
