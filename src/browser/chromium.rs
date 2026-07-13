@@ -57,7 +57,7 @@ pub fn chromium_based(
         query_cookies(keys, db_path, domains)
     }
 
-    #[cfg(any(not(feature = "appbound"), not("windows")))]
+    #[cfg(any(not(feature = "appbound"), not(target_os = "windows")))]
     {
         let keys = get_keys(legacy_key)?;
         query_cookies(keys, db_path, domains)
