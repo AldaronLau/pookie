@@ -4,7 +4,7 @@ pub fn chromium_timestamp(timestamp: i64) -> Option<i64> {
     }
 
     let mut timestamp = timestamp - 11_644_473_600_000_000;
-    
+
     // milliseconds to seconds
     timestamp /= 1000000;
     unix_timestamp(timestamp)

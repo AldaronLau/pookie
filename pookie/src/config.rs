@@ -32,12 +32,12 @@ pub fn get_browser_config(name: &str) -> &Browser {
     } else {
         "linux"
     };
-    let config = CONFIG
+
+    (CONFIG
         .platforms
         .get(platform)
         .unwrap()
         .get(name)
         .unwrap()
-        .to_owned();
-    config
+        .to_owned()) as _
 }

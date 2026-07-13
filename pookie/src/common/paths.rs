@@ -27,26 +27,23 @@ pub fn find_chrome_based_paths(config: &Browser) -> Result<(PathBuf, PathBuf)> {
             let glob_db_paths = expand_glob_paths(db_path)?;
             for db_path in glob_db_paths {
                 // glob expanded paths
-                if db_path.exists() {
-                    if let Some(parent) = db_path.parent() {
-                        let key_path = [
-                            "../../Local State",
-                            "../Local State",
-                            "Local State",
-                        ]
-                        .iter()
-                        .map(|p| parent.join(p))
-                        .find(|p| p.exists())
-                        .unwrap_or_else(|| parent.join("Local State"))
-                        .canonicalize()
-                        .context("canonicalize")?;
-                        log::debug!(
-                            "Found chrome path {}, {}",
-                            db_path.display(),
-                            key_path.display()
-                        );
-                        return Ok((key_path, db_path));
-                    }
+                if db_path.exists()
+                    && let Some(parent) = db_path.parent()
+                {
+                    let key_path =
+                        ["../../Local State", "../Local State", "Local State"]
+                            .iter()
+                            .map(|p| parent.join(p))
+                            .find(|p| p.exists())
+                            .unwrap_or_else(|| parent.join("Local State"))
+                            .canonicalize()
+                            .context("canonicalize")?;
+                    log::debug!(
+                        "Found chrome path {}, {}",
+                        db_path.display(),
+                        key_path.display()
+                    );
+                    return Ok((key_path, db_path));
                 }
             }
         }
@@ -168,5 +165,5 @@ pub fn expand_path(path: &str) -> Result<PathBuf> {
     };
 
     // Convert the expanded path to a PathBuf
-    Ok(PathBuf::from(expanded_path))
+    Ok(expanded_path)
 }
