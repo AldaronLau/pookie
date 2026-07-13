@@ -3,11 +3,11 @@ See https://github.com/runassu/chrome_v20_decryption/blob/main/decrypt_chrome_v2
 cargo build --release --features appbound
 */
 use aes_gcm::{
-    aead::{generic_array::GenericArray, Aead, KeyInit},
     Aes256Gcm, Key,
+    aead::{Aead, KeyInit, generic_array::GenericArray},
 };
-use base64::{prelude::BASE64_STANDARD, Engine};
-use eyre::{bail, eyre, Result};
+use base64::{Engine, prelude::BASE64_STANDARD};
+use eyre::{Result, bail, eyre};
 
 mod impersonate;
 

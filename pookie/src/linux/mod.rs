@@ -1,10 +1,10 @@
 use std::{collections::HashMap, sync::Arc};
 
-use eyre::{anyhow, bail, Result};
+use eyre::{Result, anyhow, bail};
 use zbus::{
+    Message,
     blocking::Connection,
     zvariant::{ObjectPath, Value},
-    Message,
 };
 
 pub const APP_ID: &str = "rookie";

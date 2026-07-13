@@ -1,6 +1,6 @@
 use std::path::PathBuf;
 
-use eyre::{anyhow, Result};
+use eyre::{Result, anyhow};
 use rusqlite::{Connection, OpenFlags};
 use url::Url;
 

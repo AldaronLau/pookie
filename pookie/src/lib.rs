@@ -17,8 +17,8 @@ mod browser;
 use common::paths;
 use config::get_browser_config;
 use enums::Cookie;
-use eyre::bail;
 pub use eyre::Result;
+use eyre::bail;
 #[cfg(target_os = "linux")]
 mod linux;
 #[cfg(target_os = "windows")]

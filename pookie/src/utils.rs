@@ -1,12 +1,12 @@
 use std::{fs, path::PathBuf};
 
 use eyre::Result;
-use rand::{distributions::Alphanumeric, Rng};
+use rand::{RngExt, distr::Alphanumeric};
 
 #[allow(unused)]
 pub fn random_string(length: usize, prefix: &str, suffix: &str) -> String {
-    let random_part: String = rand::thread_rng()
-        .sample_iter(&Alphanumeric)
+    let random_part: String = rand::rng()
+        .sample_iter(Alphanumeric)
         .take(length)
         .map(char::from)
         .collect();

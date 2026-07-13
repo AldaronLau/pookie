@@ -3,7 +3,7 @@ use std::{
     path::{Path, PathBuf},
 };
 
-use eyre::{anyhow, bail, Result};
+use eyre::{Result, anyhow, bail};
 use ini::Ini;
 use lz4_flex::block::decompress_size_prepended;
 use serde_json::Value;
@@ -49,7 +49,7 @@ pub fn firefox_based(
         let host = host?;
         let path: String = row.get(1)?;
         let is_secure: bool = row.get(2)?;
-        let expires: u64 = row.get(3)?;
+        let expires: i64 = row.get(3)?;
         let expires = date::mozilla_timestamp(expires);
 
         let name: String = row.get(4)?;
@@ -184,7 +184,7 @@ pub fn create_cookie(json_cookie: &Value) -> Result<Cookie> {
         .unwrap_or(false);
     let expires = json_cookie
         .get("expiry")
-        .and_then(|v| v.as_u64())
+        .and_then(|v| v.as_i64())
         .unwrap_or(0);
     let expires = date::mozilla_timestamp(expires);
 

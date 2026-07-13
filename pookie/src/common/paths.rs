@@ -1,6 +1,6 @@
 use std::{env, path::PathBuf};
 
-use eyre::{anyhow, bail, Context, Result};
+use eyre::{Context, Result, anyhow, bail};
 
 use crate::{browser::mozilla::get_default_profile, config::Browser};
 
@@ -126,40 +126,46 @@ pub fn find_ie_based_paths(config: &Browser) -> Result<PathBuf> {
 
     bail!("Can't find cookies file")
 }
+
 #[cfg(target_os = "windows")]
 pub fn expand_path(path: &str) -> Result<PathBuf> {
-    use regex::Regex;
-    // Define a regex pattern to match placeholders like %SOMETHING%
-    let re = Regex::new(r"%([^%]+)%")?;
+    let mut iter = path.split('%');
+    let mut expanded_path = String::new();
 
-    // Clone the input path for modification
-    let mut expanded_path = path.to_owned();
+    // Expand `%NAME%` to the env variable only if it is set
+    while let Some(component) = iter.next() {
+        expanded_path.push_str(component);
 
-    // Iterate over all matches of the regex pattern in the input path
-    for capture in re.captures_iter(path) {
-        // Get the matched placeholder (e.g., "APPDATA" from "%APPDATA%")
-        let placeholder = &capture[1];
+        let Some(placeholder) = iter.next() else {
+            continue;
+        };
 
         // Try to get the corresponding environment variable value
-        if let Ok(var_value) = env::var(placeholder) {
+        expanded_path.push_str(if let Ok(var_value) = env::var(placeholder) {
             // Replace the placeholder with the environment variable value
-            expanded_path = expanded_path.replace(&capture[0], &var_value);
-        }
+            &var_value
+        } else {
+            placeholder
+        });
     }
 
-    // Convert the expanded path to a PathBuf
-    let path_buf = PathBuf::from(expanded_path);
-
-    Ok(path_buf)
+    // Convert the expanded path to a `PathBuf`
+    Ok(PathBuf::from(expanded_path))
 }
 
 #[cfg(unix)]
 pub fn expand_path(path: &str) -> Result<PathBuf> {
-    // Get the value of the HOME environment variable
-    let home = env::var("HOME")?;
-
     // Replace ~ or $HOME with the actual home directory path
-    let expanded_path = path.replace('~', &home).replace("$HOME", &home);
+    let expanded_path = if let Some(remaining_path) = path
+        .strip_prefix("~")
+        .or_else(|| path.strip_prefix("$HOME"))
+        // Get the value of the HOME environment variable
+        && let Some(home_dir) = env::home_dir()
+    {
+        home_dir.join(remaining_path)
+    } else {
+        PathBuf::from(path.to_string())
+    };
 
     // Convert the expanded path to a PathBuf
     Ok(PathBuf::from(expanded_path))

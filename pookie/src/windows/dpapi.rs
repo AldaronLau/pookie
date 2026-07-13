@@ -1,6 +1,6 @@
 use std::{ffi::c_void, ptr};
 
-use eyre::{anyhow, bail, Result};
+use eyre::{Result, anyhow, bail};
 use windows::Win32::{Foundation, Security::Cryptography};
 
 pub fn decrypt(keydpapi: &mut [u8]) -> Result<Vec<u8>> {

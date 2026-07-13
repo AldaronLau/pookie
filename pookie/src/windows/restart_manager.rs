@@ -1,12 +1,12 @@
 use windows::{
-    core::{HSTRING, PCWSTR, PWSTR},
     Win32::{
         Foundation::{ERROR_MORE_DATA, ERROR_SUCCESS, WIN32_ERROR},
         System::RestartManager::{
-            RmEndSession, RmForceShutdown, RmGetList, RmRegisterResources,
-            RmShutdown, RmStartSession, CCH_RM_SESSION_KEY, RM_PROCESS_INFO,
+            CCH_RM_SESSION_KEY, RM_PROCESS_INFO, RmEndSession, RmForceShutdown,
+            RmGetList, RmRegisterResources, RmShutdown, RmStartSession,
         },
     },
+    core::{HSTRING, PCWSTR, PWSTR},
 };
 
 /// https://learn.microsoft.com/en-us/windows/win32/rstmgr/restart-manager-portal

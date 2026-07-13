@@ -1,8 +1,8 @@
 use std::{ffi::OsString, os::windows::ffi::OsStringExt, path::Path};
 
-use eyre::{bail, Result};
+use eyre::{Result, bail};
 use windows::Win32::{
-    Foundation::{CloseHandle, BOOL, HANDLE, NTSTATUS},
+    Foundation::{BOOL, CloseHandle, HANDLE, NTSTATUS},
     Security::{
         DuplicateToken, ImpersonateLoggedOnUser, RevertToSelf, TOKEN_DUPLICATE,
         TOKEN_QUERY,

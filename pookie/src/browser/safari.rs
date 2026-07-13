@@ -1,7 +1,7 @@
 use std::{fs::File, io::Read, path::PathBuf, vec::Vec};
 
 use byteorder::{BigEndian, ByteOrder, LittleEndian};
-use eyre::{anyhow, bail, Context, Result};
+use eyre::{Context, Result, anyhow, bail};
 
 use crate::common::{date, enums::*};
 

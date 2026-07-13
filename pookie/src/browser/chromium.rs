@@ -2,17 +2,17 @@ use std::path::PathBuf;
 
 #[cfg(target_os = "windows")]
 use aes_gcm::{
-    aead::{generic_array::GenericArray, Aead, KeyInit},
     Aes256Gcm, Key,
+    aead::{Aead, KeyInit, generic_array::GenericArray},
 };
 #[cfg(target_os = "windows")]
-use base64::{engine::general_purpose, Engine as _};
+use base64::{Engine as _, engine::general_purpose};
 #[cfg(target_os = "windows")]
 use eyre::Context;
 #[cfg(not(target_os = "linux"))]
 #[allow(unused)]
 use eyre::ContextCompat;
-use eyre::{bail, Result};
+use eyre::{Result, bail};
 
 use crate::common::{date, enums::*, sqlite};
 #[allow(unused)]
@@ -46,7 +46,9 @@ pub fn chromium_based(
     {
         let keys = if !appbound_key.is_empty() {
             if !privilege::user::privileged() {
-                bail!("Chrome cookies from version v130 can be decrypted only when running as admin due to appbound encryption!")
+                bail!(
+                    "Chrome cookies from version v130 can be decrypted only when running as admin due to appbound encryption!"
+                )
             }
             crate::windows::appbound::get_keys(appbound_key)?
         } else {
@@ -228,7 +230,7 @@ fn decrypt_encrypted_value(
     }
     log::debug!("key type: {:?}", key_type);
 
-    use aes::cipher::{block_padding::Pkcs7, BlockDecryptMut, KeyIvInit};
+    use aes::cipher::{BlockModeDecrypt, KeyIvInit, block_padding::Pkcs7};
 
     type Aes128CbcDec = cbc::Decryptor<aes::Aes128>;
 
@@ -244,7 +246,7 @@ fn decrypt_encrypted_value(
         let mut cloned_encrypted_value: Vec<u8> = encrypted_value.to_vec();
 
         if let Ok(plaintext) =
-            cipher.decrypt_padded_mut::<Pkcs7>(&mut cloned_encrypted_value)
+            cipher.decrypt_padded::<Pkcs7>(&mut cloned_encrypted_value)
         {
             let decoded = String::from_utf8(plaintext.to_vec());
             match decoded {
@@ -252,7 +254,9 @@ fn decrypt_encrypted_value(
                     return Ok(decoded);
                 }
                 Err(_) => {
-                    log::debug!("Error in decode decrypt value with utf8. trying from index 32");
+                    log::debug!(
+                        "Error in decode decrypt value with utf8. trying from index 32"
+                    );
 
                     let decoded = String::from_utf8(plaintext[32..].to_vec())
                         .unwrap_or_else(|_| {
@@ -293,7 +297,9 @@ fn unlock_file(mut path: PathBuf) -> Result<PathBuf> {
     // Elegantly restart the process which lock the cookies file (And unlock it)
     // using restart manager API
     if !shadow_copy_success {
-        log::warn!("Unlocking Chrome database... This may take a while (sometimes up to a minute)");
+        log::warn!(
+            "Unlocking Chrome database... This may take a while (sometimes up to a minute)"
+        );
         unsafe {
             crate::windows::restart_manager::release_file_lock(
                 path.to_str().unwrap(),
@@ -344,7 +350,7 @@ fn query_cookies(
         let host_key: String = row.get(0)?;
         let path: String = row.get(1)?;
         let is_secure: bool = row.get(2)?;
-        let expires: u64 = row.get(3)?;
+        let expires: i64 = row.get(3)?;
         let expires = date::chromium_timestamp(expires);
         let name: String = row.get(4)?;
 

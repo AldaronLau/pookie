@@ -1,8 +1,8 @@
 use std::path::PathBuf;
 
-use eyre::{bail, Context, Result};
+use eyre::{Context, Result, bail};
 use privilege::user::privileged;
-use rand::{distributions::Alphanumeric, thread_rng, Rng};
+use rand::{Rng, distributions::Alphanumeric, thread_rng};
 
 /// Create temp folder and return path
 pub fn temp_folder(

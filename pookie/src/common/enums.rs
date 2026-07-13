@@ -5,7 +5,7 @@ pub struct Cookie {
     pub domain: String,
     pub path: String,
     pub secure: bool,
-    pub expires: Option<u64>,
+    pub expires: Option<i64>,
     pub name: String,
     pub value: String,
     pub http_only: bool,
