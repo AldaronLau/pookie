@@ -12,7 +12,7 @@ defaults:
 env:
   RUSTUP_AUTO_INSTALL: 0
   cargo_hack_flags: >
-    --all-features
+    --feature-powerset
 jobs:
   checks:
     name: "Checks"
