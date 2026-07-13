@@ -6,7 +6,7 @@ resolver = "3"
 
 [workspace.package]
 edition = "2024"
-version = "0.0.3"
+version = "0.1.0"
 description = "Load cookies from web browsers"
 license = "(Apache-2.0 OR BSL-1.0 OR Zlib) AND MIT"
 homepage = "https://github.com/AldaronLau/pookie/releases"
@@ -111,4 +111,3 @@ windows = { version = "0.62.2", features = [
 [[example]]
 name = "simple"
 path = "examples/simple.rs"
-include = ["src/**/*", "Cargo.toml", "Cargo.lock"]

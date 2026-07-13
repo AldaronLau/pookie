@@ -42,7 +42,7 @@ pub fn chromium_based(
         .as_str()
         .unwrap_or_default();
 
-    #[cfg(feature = "appbound")]
+    #[cfg(all(feature = "appbound", target_os = "windows"))]
     {
         let keys = if !appbound_key.is_empty() {
             if !privilege::user::privileged() {
@@ -57,7 +57,7 @@ pub fn chromium_based(
         query_cookies(keys, db_path, domains)
     }
 
-    #[cfg(not(feature = "appbound"))]
+    #[cfg(any(not(feature = "appbound"), not("windows")))]
     {
         let keys = get_keys(legacy_key)?;
         query_cookies(keys, db_path, domains)

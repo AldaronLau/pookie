@@ -1495,7 +1495,7 @@ dependencies = [
 
 [[package]]
 name = "pookie"
-version = "0.0.3"
+version = "0.1.0"
 dependencies = [
  "aes",
  "aes-gcm",
