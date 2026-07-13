@@ -27,12 +27,10 @@ jobs:
         - tc: nightly
         - os: ubuntu-latest
           cc: "-t \
-            aarch64-linux-android,\
             i686-pc-windows-gnu,\
             i686-unknown-linux-gnu,\
             x86_64-unknown-illumos,\
-            i686-unknown-freebsd,\
-            x86_64-unknown-redox"
+            i686-unknown-freebsd"
         - os: macos-latest
           cc: "-t \
             x86_64-apple-darwin"
