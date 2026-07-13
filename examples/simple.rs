@@ -1,7 +1,7 @@
 fn main() {
-    tracing_subscriber::fmt::init();
+    env_logger::init();
 
-    let cookies = pookie::firefox(None).unwrap();
+    let cookies = pookie::chrome(Some(vec!["google.com".to_string()])).unwrap();
 
     for cookie in cookies {
         println!("{cookie:?}");

@@ -5,7 +5,8 @@ use eyre::{Context, Result, anyhow, bail};
 use crate::{browser::mozilla::get_default_profile, config::Browser};
 
 fn expand_glob_paths(path: PathBuf) -> Result<Vec<PathBuf>> {
-    let mut paths: Vec<PathBuf> = vec![];
+    let mut paths: Vec<PathBuf> = Vec::new();
+
     if let Some(path_str) = path.to_str() {
         for entry in glob::glob(path_str)? {
             if entry.is_ok() {
@@ -65,7 +66,7 @@ pub fn find_mozilla_based_paths(config: &Browser) -> Result<PathBuf> {
                 let profiles_path = path.join("profiles.ini");
                 let default_profile =
                     get_default_profile(profiles_path.as_path())
-                        .unwrap_or("".to_string());
+                        .unwrap_or(String::new());
                 let db_path = path.join(default_profile).join("cookies.sqlite");
                 if db_path.exists() {
                     log::debug!("Found mozilla path {}", db_path.display());
@@ -154,7 +155,7 @@ pub fn expand_path(path: &str) -> Result<PathBuf> {
 pub fn expand_path(path: &str) -> Result<PathBuf> {
     // Replace ~ or $HOME with the actual home directory path
     let expanded_path = if let Some(remaining_path) = path
-        .strip_prefix("~")
+        .strip_prefix("~/")
         .or_else(|| path.strip_prefix("$HOME"))
         // Get the value of the HOME environment variable
         && let Some(home_dir) = env::home_dir()

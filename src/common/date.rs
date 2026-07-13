@@ -1,21 +1,21 @@
+/// Microseconds since January 1, 1601 UTC
 pub fn chromium_timestamp(timestamp: i64) -> Option<i64> {
-    if timestamp == 0 {
+    if timestamp < 0 {
         return None;
     }
 
-    let mut timestamp = timestamp - 11_644_473_600_000_000;
-
-    // milliseconds to seconds
-    timestamp /= 1000000;
-    unix_timestamp(timestamp)
+    // Microseconds to seconds; Change epoch from Jan 1, 1601 -> Jan 1, 1970
+    unix_timestamp(timestamp / 1_000_000 - 11_644_473_600)
 }
 
+/// Milliseconds since January 1, 1970 UTC
 pub fn mozilla_timestamp(timestamp: i64) -> Option<i64> {
-    unix_timestamp(timestamp)
+    // Milliseconds to seconds
+    unix_timestamp(timestamp / 1_000)
 }
 
 fn unix_timestamp(timestamp: i64) -> Option<i64> {
-    if timestamp == 0 {
+    if timestamp < 0 {
         return None;
     }
 
@@ -24,25 +24,10 @@ fn unix_timestamp(timestamp: i64) -> Option<i64> {
 
 #[cfg(target_os = "macos")]
 pub fn safari_timestamp(timestamp: i64) -> Option<i64> {
-    if timestamp == 0 {
+    if timestamp < 0 {
         return None;
     }
 
-    let unix_timestamp = timestamp + 978_307_200;
-    // nanoseconds to seconds
-    let unix_timestamp = unix_timestamp / 1_000_000_000;
-
-    Some(unix_timestamp)
-}
-
-#[cfg(target_os = "windows")]
-pub fn internet_explorer_timestamp(timestamp: i64) -> Option<i64> {
-    if timestamp == 0 {
-        return None;
-    }
-
-    let mut timestamp = timestamp - 116_444_736_000_000_000;
-
-    timestamp /= 10_000_000;
-    unix_timestamp(timestamp)
+    // Nanoseconds to seconds, change epoch from Jan 1, 2001 -> Jan 1, 1970
+    Some(timestamp / 1_000_000_000 + 978_307_200)
 }

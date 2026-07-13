@@ -5,8 +5,6 @@ pub mod common;
 pub mod config;
 mod utils;
 // Browser
-#[cfg(target_os = "windows")]
-pub use browser::internet_explorer::internet_explorer_based;
 #[cfg(target_os = "macos")]
 pub use browser::safari::safari_based;
 pub use browser::{chromium::chromium_based, mozilla::firefox_based};
@@ -360,25 +358,6 @@ pub fn safari(domains: Option<Vec<String>>) -> Result<Vec<Cookie>> {
     safari_based(db_path, domains)
 }
 
-/// Returns cookies from Internet Explorer (Windows only)
-///
-/// # Arguments
-///
-/// * `domains` - A optional list that for getting specific domains only
-///
-/// # Examples
-///
-/// ```
-/// let domains = vec!["google.com".to_string()];
-/// let cookies = pookie::internet_explorer(Some(domains));
-/// ```
-#[cfg(target_os = "windows")]
-pub fn internet_explorer(domains: Option<Vec<String>>) -> Result<Vec<Cookie>> {
-    let config = get_browser_config("ie");
-    let db_path = paths::find_ie_based_paths(config)?;
-    internet_explorer_based(db_path, domains)
-}
-
 /// Returns cookies from all browsers
 ///
 /// # Arguments
@@ -401,7 +380,6 @@ pub fn load(domains: Option<Vec<String>>) -> Result<Vec<Cookie>> {
     #[cfg(target_os = "windows")]
     {
         browser_types.push(chrome);
-        browser_types.push(internet_explorer);
         browser_types.push(opera_gx);
     }
     #[cfg(target_os = "linux")]
@@ -489,24 +467,16 @@ pub fn any_browser(
         return Ok(cookies);
     }
 
-    #[cfg(target_os = "windows")]
-    {
-        // Internet Explorer
-        if let Ok(cookies) =
-            internet_explorer_based(cookies_path.into(), domains.clone())
-        {
-            return Ok(cookies);
-        }
-    }
     #[cfg(target_os = "macos")]
     {
         if let Ok(cookies) = safari_based(cookies_path.into(), domains) {
             return Ok(cookies);
         }
     }
+
     bail!(
         "\nNo cookies found.\n\
-    If you're using a Chromium-based browser, please specify the key file \
-    and run this program with administrator privileges."
+         If you're using a Chromium-based browser, please specify the key file \
+         and run this program with administrator privileges."
     );
 }

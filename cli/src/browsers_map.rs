@@ -19,9 +19,6 @@ lazy_static! {
         map.insert("edge".into(), pookie::edge);
         map.insert("firefox".into(), pookie::firefox);
         map.insert("zen".into(), pookie::zen);
-
-        #[cfg(target_os = "windows")]
-        map.insert("internet_explorer".into(), pookie::internet_explorer);
         map.insert("librewolf".into(), pookie::librewolf);
         map.insert("opera".into(), pookie::opera);
         map.insert("opera gx".into(), pookie::opera_gx);
@@ -30,9 +27,7 @@ lazy_static! {
         map.insert("safari".into(), pookie::safari);
 
         map.insert("vivaldi".into(), pookie::vivaldi);
-
         map.insert("arc".into(), pookie::arc);
-
         map
     };
 }
