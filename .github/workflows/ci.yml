@@ -27,7 +27,6 @@ jobs:
         - tc: nightly
         - os: ubuntu-latest
           cc: "-t \
-            i686-pc-windows-gnu,\
             i686-unknown-linux-gnu,\
             x86_64-unknown-illumos,\
             i686-unknown-freebsd"
