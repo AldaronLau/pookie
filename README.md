@@ -36,7 +36,7 @@ fn main() {
 
 ## CLI 💻
 
-You can use rookie as a `CLI` tool which will decrypt the cookies and print it as `JSON`  
+You can use pookie as a `CLI` tool which will decrypt the cookies and print it as `JSON`  
 See [cli](https://github.com/thewh1teagle/rookie/tree/main/cli) folder
 
 ## Contribute 🤝

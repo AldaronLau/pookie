@@ -17,7 +17,7 @@ pub fn random_string(length: usize, prefix: &str, suffix: &str) -> String {
 #[allow(unused)]
 pub fn temp_dir() -> Result<PathBuf> {
     let tmp_path = std::env::temp_dir();
-    let tmp_path = tmp_path.join(random_string(6, "rookie", ""));
+    let tmp_path = tmp_path.join(random_string(6, "pookie", ""));
     fs::create_dir_all(&tmp_path)?;
     Ok(tmp_path)
 }

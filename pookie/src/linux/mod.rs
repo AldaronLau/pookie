@@ -7,7 +7,7 @@ use zbus::{
     zvariant::{ObjectPath, Value},
 };
 
-pub const APP_ID: &str = "rookie";
+pub const APP_ID: &str = "pookie";
 
 /// Get password from either kdewallet or libsecret (ubuntu)
 pub fn get_passwords(unix_crypt_name: &str) -> Result<Vec<String>> {
