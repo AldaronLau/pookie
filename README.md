@@ -26,7 +26,7 @@ Create `main.rs` with the following
 use pookie::brave;
 
 fn main() {
-    let domains = vec!["google.com"];
+    let domains = vec!["google.com".to_string()];
     let cookies = brave(Some(domains)).unwrap();
     for cookie in cookies {
         println!("{cookie:?}");
