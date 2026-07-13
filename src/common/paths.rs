@@ -66,7 +66,7 @@ pub fn find_mozilla_based_paths(config: &Browser) -> Result<PathBuf> {
                 let profiles_path = path.join("profiles.ini");
                 let default_profile =
                     get_default_profile(profiles_path.as_path())
-                        .unwrap_or(String::new());
+                        .unwrap_or_default();
                 let db_path = path.join(default_profile).join("cookies.sqlite");
                 if db_path.exists() {
                     log::debug!("Found mozilla path {}", db_path.display());

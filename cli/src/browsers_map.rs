@@ -3,6 +3,8 @@ use std::collections::HashMap;
 use lazy_static::lazy_static;
 use pookie::{self, enums::Cookie, Result};
 
+// Incorrectly assumed unused
+#[allow(dead_code)]
 type BrowserFn = fn(Option<Vec<String>>) -> Result<Vec<Cookie>>;
 
 lazy_static! {
