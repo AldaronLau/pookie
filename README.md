@@ -26,7 +26,6 @@ Check out the [documentation] for examples.
    - **Chromium:** `Linux`, `macOS`, `Windows`
    - **Edge:** `Linux`, `macOS`, `Windows`
    - **Firefox:** `Linux`, `macOS`, `Windows`
-   - **Internet Explorer:** `Windows`
    - **LibreWolf:** `Linux`, `macOS`, `Windows`
    - **Opera:** `Linux`, `macOS`, `Windows`
    - **Opera GX:** `macOS`, `Windows`
@@ -57,7 +56,6 @@ to see what configuration is needed.
 | Chrome    | 2024/10/26 | 2024/10/26 | 2024/03/16 |
 | Edge      | 2023/10/01 | 2024/08/07 | 2024/03/16 |
 | Firefox   | 2024/10/26 | 2023/11/25 | 2024/03/16 |
-| IE        |    N/A     |    N/A     | 2024/03/16 |
 | LibreWolf | 2023/10/01 | 2023/11/25 | 2023/10/01 |
 | Opera     | 2023/10/01 |     -      | 2023/10/01 |
 | Opera GX  |    N/A     |     -      | 2023/10/01 |
