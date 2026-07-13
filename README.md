@@ -73,7 +73,7 @@ Any future MSRV updates will follow the [Ardaku MSRV guidelines].
 
 ## License
 
-Copyright © 2023-2024 thewh1teagle and others
+Copyright © 2023-2024 thewh1teagle and others  
 Copyright © 2026 The Pookie crate Contributor(s)
 
 Dual licensed under the:
