@@ -4,9 +4,10 @@ cargo build --release --features appbound
 */
 use aes_gcm::{
     Aes256Gcm, Key,
-    aead::{Aead, KeyInit, generic_array::GenericArray},
+    aead::{Aead, KeyInit},
 };
 use base64::{Engine, prelude::BASE64_STANDARD};
+use cbc::cipher::Array;
 use eyre::{Result, bail, eyre};
 
 mod impersonate;
@@ -52,7 +53,7 @@ pub fn get_keys(key64: &str) -> Result<Vec<Vec<u8>>> {
     ciphertext.extend(tag);
     let aes_key = Key::<Aes256Gcm>::from_slice(&aes_key);
     let cipher = Aes256Gcm::new(aes_key);
-    let nonce = GenericArray::from_slice(iv); // 96-bits; unique per message
+    let nonce = Array::from_slice(iv); // 96-bits; unique per message
     if let Ok(plain) = cipher
         .decrypt(nonce, ciphertext.as_slice())
         .map_err(|e| eyre!("{:?}", e))

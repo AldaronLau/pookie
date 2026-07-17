@@ -1,23 +1,26 @@
 use std::{ffi::OsString, os::windows::ffi::OsStringExt, path::Path};
 
 use eyre::{Result, bail};
-use windows::Win32::{
-    Foundation::{BOOL, CloseHandle, HANDLE, NTSTATUS},
-    Security::{
-        DuplicateToken, ImpersonateLoggedOnUser, RevertToSelf, TOKEN_DUPLICATE,
-        TOKEN_QUERY,
-    },
-    System::{
-        ProcessStatus::K32GetProcessImageFileNameW,
-        Threading::{
-            OpenProcess, OpenProcessToken, PROCESS_QUERY_INFORMATION,
-            PROCESS_VM_READ,
+use windows::{
+    Win32::{
+        Foundation::{CloseHandle, HANDLE, NTSTATUS},
+        Security::{
+            DuplicateToken, ImpersonateLoggedOnUser, RevertToSelf,
+            TOKEN_DUPLICATE, TOKEN_QUERY,
+        },
+        System::{
+            ProcessStatus::K32GetProcessImageFileNameW,
+            Threading::{
+                OpenProcess, OpenProcessToken, PROCESS_QUERY_INFORMATION,
+                PROCESS_VM_READ,
+            },
         },
     },
+    core::BOOL,
 };
 
 #[link(name = "ntdll")]
-extern "system" {
+unsafe extern "system" {
     fn RtlAdjustPrivilege(
         privilege: i32,
         enable: BOOL,
@@ -75,7 +78,7 @@ fn get_process_name(pid: u32) -> Result<String> {
             pid,
         )?;
         if process_handle.is_invalid() {
-            return Err(windows::core::Error::from_win32().into());
+            return Err(windows::core::Error::from_thread().into());
         }
         let mut buffer = vec![0u16; 260]; // 260 is the max path length in Windows
 
@@ -123,7 +126,7 @@ fn get_process_handle(pid: u32) -> Result<HANDLE> {
 
         // Check if the handle is valid
         if process_handle.is_invalid() {
-            Err(windows::core::Error::from_win32().into())
+            Err(windows::core::Error::from_thread().into())
         } else {
             Ok(process_handle)
         }

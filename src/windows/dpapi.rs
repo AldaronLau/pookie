@@ -42,9 +42,10 @@ pub fn decrypt(keydpapi: &mut [u8]) -> Result<Vec<u8>> {
     };
     let pbdata_hlocal = Foundation::HLOCAL(data_out.pbData as *mut c_void);
     unsafe {
-        let _ = match Foundation::LocalFree(pbdata_hlocal) {
-            Ok(_) => Ok(()),
-            Err(_) => Err(anyhow!("LocalFree failed")),
+        let _ = if Foundation::LocalFree(Some(pbdata_hlocal)).is_invalid() {
+            Err(anyhow!("LocalFree failed"))
+        } else {
+            Ok(())
         };
     };
     Ok(decrypted_data)

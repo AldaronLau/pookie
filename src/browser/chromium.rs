@@ -3,10 +3,12 @@ use std::path::PathBuf;
 #[cfg(target_os = "windows")]
 use aes_gcm::{
     Aes256Gcm, Key,
-    aead::{Aead, KeyInit, generic_array::GenericArray},
+    aead::{Aead, KeyInit},
 };
 #[cfg(target_os = "windows")]
 use base64::{Engine as _, engine::general_purpose};
+#[cfg(target_os = "windows")]
+use cbc::cipher::Array;
 #[cfg(target_os = "windows")]
 use eyre::Context;
 #[cfg(not(target_os = "linux"))]
@@ -180,7 +182,7 @@ fn decrypt_encrypted_value(
     for key in keys {
         let key = Key::<Aes256Gcm>::from_slice(key.as_slice());
         let cipher = Aes256Gcm::new(key);
-        let nonce = GenericArray::from_slice(nonce); // 96-bits; unique per message
+        let nonce = Array::from_slice(nonce); // 96-bits; unique per message
 
         match cipher.decrypt(nonce, ciphertext.as_ref()) {
             Ok(plaintext) => {
@@ -300,11 +302,10 @@ fn unlock_file(mut path: PathBuf) -> Result<PathBuf> {
         log::warn!(
             "Unlocking Chrome database... This may take a while (sometimes up to a minute)"
         );
-        unsafe {
-            crate::windows::restart_manager::release_file_lock(
-                path.to_str().unwrap(),
-            );
-        }
+
+        crate::windows::restart_manager::release_file_lock(
+            path.to_str().unwrap(),
+        );
     }
     Ok(path)
 }

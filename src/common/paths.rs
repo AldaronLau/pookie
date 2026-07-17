@@ -137,11 +137,12 @@ pub fn expand_path(path: &str) -> Result<PathBuf> {
         let Some(placeholder) = iter.next() else {
             continue;
         };
+        let maybe_var_value = env::var(placeholder);
 
         // Try to get the corresponding environment variable value
-        expanded_path.push_str(if let Ok(var_value) = env::var(placeholder) {
+        expanded_path.push_str(if let Ok(ref var_value) = maybe_var_value {
             // Replace the placeholder with the environment variable value
-            &var_value
+            var_value
         } else {
             placeholder
         });

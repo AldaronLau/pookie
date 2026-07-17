@@ -2,7 +2,7 @@ use std::path::PathBuf;
 
 use eyre::{Context, Result, bail};
 use privilege::user::privileged;
-use rand::{Rng, distributions::Alphanumeric, thread_rng};
+use rand::{RngExt, distr::Alphanumeric};
 
 /// Create temp folder and return path
 pub fn temp_folder(
@@ -10,12 +10,11 @@ pub fn temp_folder(
     suffix: &str,
     rand_len: usize,
 ) -> Result<PathBuf> {
-    let random_string: String = thread_rng()
-        .sample_iter(&Alphanumeric)
-        .take(rand_len)
-        .map(char::from) // From link above, this is needed in later versions
+    let mut rng = rand::rng();
+    let random_string: String = (0..rand_len)
+        .map(|_| char::from(rng.sample(Alphanumeric)))
         .collect();
-    let name = format!("{}{}{}", prefix, random_string, suffix);
+    let name = format!("{prefix}{random_string}{suffix}");
     let tmp = std::env::temp_dir();
     let temp_path = tmp.join(name);
     std::fs::create_dir(temp_path.clone())?;
